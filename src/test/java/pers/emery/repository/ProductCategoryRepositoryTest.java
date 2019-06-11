@@ -28,11 +28,11 @@ public class ProductCategoryRepositoryTest {
     }
 
     @Test
-    @Transactional
+//    @Transactional
     public void saveTest() {
         // @Transactional
         // 在测试中会自动回滚
-        ProductCategory productCategory = new ProductCategory("受欢迎", 4);
+        ProductCategory productCategory = new ProductCategory("name2", 4);
         ProductCategory result = repository.save(productCategory);
         Assert.assertNotNull(result);
     }

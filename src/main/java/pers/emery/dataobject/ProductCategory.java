@@ -6,14 +6,17 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
- * 类目
+ * 商品类目
+ * @author emery
  */
 @Entity
 @DynamicUpdate
 @Data
+//@Table(name = "table_product_category")
 public class ProductCategory {
 
     /**

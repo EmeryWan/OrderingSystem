@@ -5,6 +5,9 @@ import pers.emery.dataobject.ProductCategory;
 
 import java.util.List;
 
+/**
+ * @author emery
+ */
 public interface ProductCategoryRepository extends JpaRepository<ProductCategory, Integer> {
 
     /**

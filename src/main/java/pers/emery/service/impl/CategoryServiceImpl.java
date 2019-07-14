@@ -4,17 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.emery.dataobject.ProductCategory;
 import pers.emery.repository.ProductCategoryRepository;
-import pers.emery.service.ProductCategoryService;
+import pers.emery.service.CategoryService;
 
 import java.util.List;
 
 @Service
-public class ProductCategoryServiceImpl implements ProductCategoryService {
+public class CategoryServiceImpl implements CategoryService {
 
     private final ProductCategoryRepository repository;
 
     @Autowired
-    public ProductCategoryServiceImpl(ProductCategoryRepository repository) {
+    public CategoryServiceImpl(ProductCategoryRepository repository) {
         this.repository = repository;
     }
 

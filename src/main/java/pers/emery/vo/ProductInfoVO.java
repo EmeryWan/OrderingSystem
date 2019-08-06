@@ -1,4 +1,4 @@
-package pers.emery.VO;
+package pers.emery.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

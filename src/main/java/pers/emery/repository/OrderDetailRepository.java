@@ -8,8 +8,6 @@ import pers.emery.dataobject.OrderDetail;
 import java.util.List;
 
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, String> {
-//@RepositoryDefinition(domainClass = OrderDetail.class, idClass = String.class)
-//public interface OrderDetailRepository {
 
     List<OrderDetail> findByOrOrderId(String orderId);
 

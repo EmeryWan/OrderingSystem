@@ -2,12 +2,16 @@ package pers.emery.dataobject;
 
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
+import pers.emery.enums.ProductStatusEnum;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * @author emery
+ */
 @Entity
 @Data
 @DynamicUpdate
@@ -35,7 +39,7 @@ public class ProductInfo {
     /**
      * 商品状态 0 正常 1 下架
      */
-    private Integer productStatus;
+    private Integer productStatus = ProductStatusEnum.UP.getCode();
 
     /**
      * 类目编号

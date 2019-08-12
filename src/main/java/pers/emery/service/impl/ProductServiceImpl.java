@@ -63,7 +63,7 @@ public class ProductServiceImpl implements ProductService {
             }
 
             Integer result = productInfo.getProductStock() - cartDTO.getProductQuantity();
-            if (result <  0) {
+            if (result < 0) {
                 throw new SellException(ResultEnum.PRODUCT_STOCK_ERROR);
             }
             productInfo.setProductStock(result);

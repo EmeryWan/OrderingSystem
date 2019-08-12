@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 
+/**
+ * @author emery
+ */
 @Data
 @Entity
 public class OrderDetail {

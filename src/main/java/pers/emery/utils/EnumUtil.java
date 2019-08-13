@@ -2,8 +2,14 @@ package pers.emery.utils;
 
 import pers.emery.enums.CodeEnum;
 
+/**
+ * @author emery
+ */
 public class EnumUtil {
 
+    /**
+     * 通过 枚举 code 获得枚举对象
+     */
     public static <T extends CodeEnum> T  getByCode(Integer code, Class<T> enumClass) {
         for ( T each : enumClass.getEnumConstants()) {
             if (code.equals(each.getCode())) {

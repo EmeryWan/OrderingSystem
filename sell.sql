@@ -7,7 +7,7 @@ create table `product_category` (
     `update_time` timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
     primary key (`category_id`),
     unique key `uqe_category_type` (`category_type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment '类目表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_general_ci comment '类目表';
 
 -- 商品
 create table `product_info` (
@@ -24,7 +24,7 @@ create table `product_info` (
     `create_time` timestamp not null default current_timestamp comment '创建时间',
     `update_time` timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
     primary key (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment '商品表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_general_ci comment '商品表';
 
 -- 订单
 create table `order_master` (
@@ -41,7 +41,7 @@ create table `order_master` (
     primary key (`order_id`),
     -- 索引
     key `idx_buyer_openid` (`buyer_openid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment '订单';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_general_ci comment '订单';
 
 -- 订单详情
 create table `order_detail` (
@@ -57,4 +57,4 @@ create table `order_detail` (
     primary key (`detail_id`),
     -- 索引
     key `idx_order_id` (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 comment '订单详情';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_general_ci comment '订单详情';

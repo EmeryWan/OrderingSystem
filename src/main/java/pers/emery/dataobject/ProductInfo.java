@@ -1,8 +1,10 @@
 package pers.emery.dataobject;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 import pers.emery.enums.ProductStatusEnum;
+import pers.emery.utils.EnumUtil;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -49,5 +51,10 @@ public class ProductInfo {
     private Date createTime;
 
     private Date updateTime;
+
+    @JsonIgnore
+    public ProductStatusEnum getProductStatusEnum() {
+        return EnumUtil.getByCode(productStatus, ProductStatusEnum.class);
+    }
 
 }

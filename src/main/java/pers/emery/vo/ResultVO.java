@@ -1,4 +1,4 @@
-package pers.emery.VO;
+package pers.emery.vo;
 
 import lombok.Data;
 

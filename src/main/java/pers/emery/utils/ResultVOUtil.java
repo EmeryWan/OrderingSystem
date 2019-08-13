@@ -1,6 +1,6 @@
 package pers.emery.utils;
 
-import pers.emery.VO.ResultVO;
+import pers.emery.vo.ResultVO;
 
 /**
  * @author emery

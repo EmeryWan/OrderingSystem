@@ -54,7 +54,7 @@ public class BuyerProductController {
 
         // 查询上架商品中包含的类目
         List<Integer> categoryTypeList = productInfoListList.stream()
-                .map(e -> e.getCategoryType())
+                .map(ProductInfo::getCategoryType)
                 .collect(Collectors.toList());
         System.out.println(categoryTypeList);
         List<ProductCategory> productCategoryList = categoryService.findByCategoryTypeIn(categoryTypeList);

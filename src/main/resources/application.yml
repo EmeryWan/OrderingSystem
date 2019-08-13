@@ -6,6 +6,10 @@ spring:
     password: desktop
   jpa:
     show-sql: true
+  thymeleaf:
+    # 开发时禁用缓存
+    cache: false
+    mode: LEGACYHTML5
 debug: false
 server:
   # 根目录

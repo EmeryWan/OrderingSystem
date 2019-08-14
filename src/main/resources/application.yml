@@ -10,7 +10,7 @@ spring:
     # 开发时禁用缓存
     cache: false
     mode: LEGACYHTML5
-debug: true
+debug: false
 server:
   # 根目录
   context-path: /sell

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -49,7 +50,10 @@ public class SellerProductController {
         return "food/index";
     }
 
-    @GetMapping("/list")
+    /**
+     * 列出所有的信息
+     */
+    @GetMapping("/index")
     public ModelAndView list(@RequestParam(value = "page", defaultValue = "1") Integer page,
                              @RequestParam(value = "size", defaultValue = "10") Integer size,
                              Map<String, Object> map) {
@@ -59,50 +63,27 @@ public class SellerProductController {
         map.put("productInfoPage", productInfoPage);
         map.put("currentPage", page);
         map.put("size", size);
-        return new ModelAndView("product/list", map);
+        // 查询所有类目
+        List<ProductCategory> categoryList = categoryService.findAll();
+        map.put("categoryList", categoryList);
+        return new ModelAndView("product/index", map);
     }
 
     /**
-     * 上架
+     * 显示单个商品信息
      */
-    @RequestMapping("/on_sale")
-    public ModelAndView onSale(@RequestParam("productId") String productId,
-                               Map<String, Object> map) {
-        try {
-            productService.onSale(productId);
-        } catch (SellException e) {
-            // 商品id错误，已经是上架状态
-            map.put("msg", e.getMessage());
-            map.put("url", "/sell/seller/product/list");
-            return new ModelAndView("common/error", map);
-        }
-
-        map.put("url", "/sell/seller/product/list");
-        return new ModelAndView("common/success", map);
-    }
-
-    /**
-     * 下架
-     */
-    @RequestMapping("/off_sale")
-    public ModelAndView offSale(@RequestParam("productId") String productId,
-                                Map<String, Object> map) {
-        try {
-            productService.offSale(productId);
-        } catch (SellException e) {
-            map.put("msg", e.getMessage());
-            map.put("url", "/sell/seller/product/list");
-            return new ModelAndView("common/error", map);
-        }
-
-        map.put("url", "/sell/seller/product/list");
-        return new ModelAndView("common/success", map);
+    @GetMapping("/info")
+    public ModelAndView info(@RequestParam("productId") String productId,
+                             Map<String, Object> map) {
+        ProductInfo productInfo = productService.findOne(productId);
+        map.put("productInfo", productInfo);
+        return new ModelAndView("product/info", map);
     }
 
     /**
      * 添加，修改页面
      */
-    @RequestMapping("/index")
+    @RequestMapping("/set")
     public ModelAndView index(@RequestParam(value = "productId", required = false) String productId, Map<String, Object> map) {
         if (!StringUtils.isEmpty(productId)) {
             ProductInfo productInfo = productService.findOne(productId);
@@ -113,14 +94,14 @@ public class SellerProductController {
         List<ProductCategory> categoryList = categoryService.findAll();
         map.put("categoryList", categoryList);
 
-        return new ModelAndView("product/index", map);
+        return new ModelAndView("product/set", map);
     }
 
     /**
      * 添加，
      * 更新
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
     public ModelAndView save(@Valid ProductForm form, BindingResult bindingResult,
                              Map<String, Object> map) {
         if (bindingResult.hasErrors()) {
@@ -142,6 +123,43 @@ public class SellerProductController {
         } catch (SellException e) {
             map.put("msg", e.getMessage());
             map.put("url", "/sell/seller/product/index");
+            return new ModelAndView("common/error", map);
+        }
+
+        map.put("url", "/sell/seller/product/list");
+        return new ModelAndView("common/success", map);
+    }
+
+    /**
+     * 上架
+     */
+    @RequestMapping("/on")
+    public ModelAndView onSale(@RequestParam("productId") String productId,
+                               Map<String, Object> map) {
+        try {
+            productService.onSale(productId);
+        } catch (SellException e) {
+            // 商品id错误，已经是上架状态
+            map.put("msg", e.getMessage());
+            map.put("url", "/sell/seller/product/list");
+            return new ModelAndView("common/error", map);
+        }
+
+        map.put("url", "/sell/seller/product/list");
+        return new ModelAndView("common/success", map);
+    }
+
+    /**
+     * 下架
+     */
+    @RequestMapping("/off")
+    public ModelAndView offSale(@RequestParam("productId") String productId,
+                                Map<String, Object> map) {
+        try {
+            productService.offSale(productId);
+        } catch (SellException e) {
+            map.put("msg", e.getMessage());
+            map.put("url", "/sell/seller/product/list");
             return new ModelAndView("common/error", map);
         }
 

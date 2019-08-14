@@ -47,7 +47,7 @@ public class SellerProductController {
 
     @GetMapping("/test")
     public String test() {
-        return "food/index";
+        return "index/index";
     }
 
     /**

@@ -64,37 +64,35 @@ var common_ops = {
         });
     },
     setMenuIconHighLight:function(){
-         if( $("#side-menu li").size() < 1 ){
+        if( $("#side-menu li").size() < 1 ){
             return;
         }
 
         var pathname = window.location.pathname;
         var nav_name = "default";
 
-
-        if(  pathname.indexOf("/account") > -1  ){
-            nav_name = "account";
-        }
-
-
         if(  pathname.indexOf("/product") > -1  ){
             nav_name = "product";
         }
 
-        if(  pathname.indexOf("/member") > -1  ){
-            nav_name = "member";
+        if(  pathname.indexOf("/category") > -1  ){
+            nav_name = "category";
+        }
+
+        if(  pathname.indexOf("/order") > -1  ){
+            nav_name = "order";
         }
 
         if(  pathname.indexOf("/finance") > -1  ){
             nav_name = "finance";
         }
 
-        if(  pathname.indexOf("/qrcode") > -1  ){
-            nav_name = "market";
+        if(  pathname.indexOf("/account") > -1  ){
+            nav_name = "account";
         }
 
-        if(  pathname.indexOf("/stat") > -1  ){
-            nav_name = "stat";
+        if(  pathname.indexOf("/member") > -1  ){
+            nav_name = "member";
         }
 
         if( nav_name == null ){

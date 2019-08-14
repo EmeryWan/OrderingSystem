@@ -21,28 +21,34 @@
 
             <!-- 侧栏 -->
             <li class="default">
-                <a href="{{ buildUrl('/') }}"><i class="fa fa-dashboard fa-lg"></i>
-                    <span class="nav-label">仪表盘</span></a>
+                <a href="/" th:href="@{/seller}"><i class="fa fa-dashboard fa-lg"></i>
+                    <span class="nav-label">后台状态</span></a>
             </li>
-            <li class="account">
-                <a href="{{ buildUrl('/account/index') }}"><i class="fa fa-user fa-lg"></i> <span
-                        class="nav-label">账号管理</span></a>
-            </li>
+
             <li class="product">
-                <a href="/food/index" th:href="@{/seller/product/index}"><i class="fa fa-book fa-lg"></i> <span
-                        class="nav-label">商品管理</span></a>
+                <a href="/product/index" th:href="@{/seller/product/index}"><i class="fa fa-book fa-lg"></i>
+                    <span class="nav-label">商品管理</span></a>
             </li>
-            <li class="member">
-                <a href="{{ buildUrl('/member/index') }}"><i class="fa fa-group fa-lg"></i> <span
-                        class="nav-label">会员列表</span></a>
+            <li class="category">
+                <a href="/category/index" th:href="@{/seller/category/index}"><i class="fa fa-book fa-lg"></i>
+                    <span class="nav-label">类目管理</span></a>
+            </li>
+            <li class="order">
+                <a href="/order/index" th:href="@{/seller/order/index}"><i class="fa fa-rmb fa-lg"></i>
+                    <span class="nav-label">订单管理</span></a>
             </li>
             <li class="finance">
-                <a href="{{ buildUrl('/finance/index') }}"><i class="fa fa-rmb fa-lg"></i> <span
-                        class="nav-label">财务管理</span></a>
+                <a href="/finance/index" th:href="@{/seller/finance/index}"><i class="fa fa-bar-chart fa-lg"></i>
+                    <!-- order_detail -->
+                    <span class="nav-label">财务管理</span></a>
             </li>
-            <li class="stat">
-                <a href="{{ buildUrl('/stat/index') }}"><i class="fa fa-bar-chart fa-lg"></i> <span
-                        class="nav-label">统计管理</span></a>
+            <li class="account">
+                <a href="/account/index"><i class="fa fa-user fa-lg"></i>
+                    <span class="nav-label">账号管理</span></a>
+            </li>
+            <li class="member">
+                <a href="/member/index"><i class="fa fa-group fa-lg"></i>
+                    <span class="nav-label">会员列表</span></a>
             </li>
         </ul>
 

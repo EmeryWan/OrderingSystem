@@ -18,7 +18,7 @@ public interface OrderService {
      * @param orderId
      * @return
      */
-    OrderDTO findOne(String orderId);
+    OrderDTO findById(String orderId);
 
     /**
      * 查询订单列表

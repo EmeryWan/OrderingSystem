@@ -9,6 +9,11 @@ import java.util.List;
 
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, String> {
 
-    List<OrderDetail> findByOrOrderId(String orderId);
+    /**
+     *
+     * @param orderId
+     * @return
+     */
+    List<OrderDetail> findByOrderId(String orderId);
 
 }

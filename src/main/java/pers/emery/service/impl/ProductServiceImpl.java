@@ -13,6 +13,7 @@ import pers.emery.repository.ProductInfoRepository;
 import pers.emery.service.ProductService;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author emery
@@ -29,8 +30,8 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ProductInfo findOne(String productId) {
-        return repository.findOne(productId);
+    public Optional<ProductInfo> findById(String productId) {
+        return repository.findById(productId);
     }
 
     @Override
@@ -57,10 +58,12 @@ public class ProductServiceImpl implements ProductService {
     public void decreaseStock(List<CartDTO> cartDTOList) {
 
         for (CartDTO cartDTO : cartDTOList) {
-            ProductInfo productInfo = repository.findOne(cartDTO.getProductId());
-            if (productInfo == null) {
+            Optional<ProductInfo> productInfoOptional = repository.findById(cartDTO.getProductId());
+            if (!productInfoOptional.isPresent()) {
                 throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
             }
+
+            ProductInfo productInfo = productInfoOptional.get();
 
             Integer result = productInfo.getProductStock() - cartDTO.getProductQuantity();
             if (result < 0) {
@@ -77,11 +80,14 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public ProductInfo onSale(String productId) {
-        ProductInfo productInfo = repository.findOne(productId);
+        Optional<ProductInfo> productInfoOptional = repository.findById(productId);
+
+        ProductInfo productInfo = productInfoOptional.orElseThrow(() -> new SellException(ResultEnum.PRODUCT_NOT_EXIST));
+
         // 商品不存在
-        if (productInfo == null) {
-            throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
-        }
+        // if (productInfo == null) {
+        //     throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+        // }
         // 已经是上架状态
         if (productInfo.getProductStatusEnum() == ProductStatusEnum.UP) {
             throw new SellException(ResultEnum.PRODUCT_STATUS_ERROR);
@@ -97,11 +103,14 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public ProductInfo offSale(String productId) {
-        ProductInfo productInfo = repository.findOne(productId);
+        Optional<ProductInfo> productInfoOptional = repository.findById(productId);
+
+        ProductInfo productInfo = productInfoOptional.orElseThrow(() -> new SellException(ResultEnum.PRODUCT_NOT_EXIST));
+
         // 商品不存在
-        if (productInfo == null) {
-            throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
-        }
+        // if (productInfo == null) {
+        //     throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+        // }
         // 已经是下架状态
         if (productInfo.getProductStatusEnum() == ProductStatusEnum.DOWN) {
             throw new SellException(ResultEnum.PRODUCT_STATUS_ERROR);

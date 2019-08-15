@@ -8,10 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pers.emery.dataobject.ProductCategory;
 import pers.emery.dataobject.ProductInfo;
@@ -47,7 +44,7 @@ public class SellerProductController {
 
     @GetMapping("/test")
     public String test() {
-        return "food/index";
+        return "index/index";
     }
 
     /**
@@ -58,7 +55,8 @@ public class SellerProductController {
                              @RequestParam(value = "size", defaultValue = "10") Integer size,
                              Map<String, Object> map) {
         // 分页信息
-        PageRequest pageRequest = new PageRequest(page - 1, size);
+        PageRequest pageRequest = PageRequest.of(page - 1, size);
+        // PageRequest pageRequest = new PageRequest(page - 1, size);
         Page<ProductInfo> productInfoPage = productService.findAll(pageRequest);
         map.put("productInfoPage", productInfoPage);
         map.put("currentPage", page);
@@ -72,10 +70,10 @@ public class SellerProductController {
     /**
      * 显示单个商品信息
      */
-    @GetMapping("/info")
-    public ModelAndView info(@RequestParam("productId") String productId,
+    @GetMapping("/info/{id}")
+    public ModelAndView info(@PathVariable String id,
                              Map<String, Object> map) {
-        ProductInfo productInfo = productService.findOne(productId);
+        ProductInfo productInfo = productService.findById(id).get();
         map.put("productInfo", productInfo);
         return new ModelAndView("product/info", map);
     }
@@ -86,7 +84,7 @@ public class SellerProductController {
     @RequestMapping("/set")
     public ModelAndView index(@RequestParam(value = "productId", required = false) String productId, Map<String, Object> map) {
         if (!StringUtils.isEmpty(productId)) {
-            ProductInfo productInfo = productService.findOne(productId);
+            ProductInfo productInfo = productService.findById(productId).get();
             map.put("productInfo", productInfo);
         }
 
@@ -116,7 +114,7 @@ public class SellerProductController {
                 // id=null 新增
                 form.setProductId(KeyUtil.genUniqueKey());
             } else {
-                productInfo = productService.findOne(form.getProductId());
+                productInfo = productService.findById(form.getProductId()).get();
             }
             BeanUtils.copyProperties(form, productInfo);
             productService.save(productInfo);

@@ -11,6 +11,7 @@ import pers.emery.dataobject.ProductCategory;
 import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -23,8 +24,8 @@ public class ProductCategoryRepositoryTest {
 
     @Test
     public void findOneTest() {
-        ProductCategory productCategory = repository.findOne(1);
-        System.out.println(productCategory.toString());
+        Optional<ProductCategory> productCategory = repository.findById(1);
+//        System.out.println(productCategory.toString());
     }
 
     @Test

@@ -7,6 +7,7 @@ import pers.emery.repository.ProductCategoryRepository;
 import pers.emery.service.CategoryService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -19,8 +20,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public ProductCategory findOne(Integer categoryId) {
-        return repository.findOne(categoryId);
+    public Optional<ProductCategory> findById(Integer categoryId) {
+        return repository.findById(categoryId);
     }
 
     @Override

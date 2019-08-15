@@ -6,13 +6,14 @@ import pers.emery.dataobject.ProductInfo;
 import pers.emery.dto.CartDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author emery
  */
 public interface ProductService {
 
-    ProductInfo findOne(String productId);
+    Optional<ProductInfo> findById(String productId);
 
     /**
      * 查询所有在架的商品列表

@@ -27,6 +27,7 @@
         <!-- 通用部分 -->
         <div th:replace="module/nav_top::html"></div>
 
+<!-- ------------------  -->
 
         <!-- 第二块 tab栏 -->
         <div class="row  border-bottom">
@@ -97,8 +98,8 @@
                         <th>库存</th>
                         <th>类目</th>
                         <th>创建时间</th>
-                        <th>操作</th>
                         <th>商品状态</th>
+                        <th>操作</th>
                     </tr>
                     </thead>
 
@@ -112,8 +113,8 @@
                         <td th:text="${productInfo.productStatusEnum.message}"></td>
                         <td>
                             <!-- 详细信息 -->
-                            <a href="/product/info" th:href="@{info(productId=${productInfo.productId})}">
-                                <i class="fa fa-eye fa-lg"></i></a>
+                            <a href="/product/info" th:href="@{'info/' + ${productInfo.productId}}">
+                                <i class="fa fa-info-circle fa-lg"></i></a>
                             <!-- 修改 -->
                             <a class="m-l" href="/product/set" th:href="@{set(productId=${productInfo.productId})}">
                                 <i class="fa fa-edit fa-lg"></i></a>
@@ -121,7 +122,7 @@
                             <!-- 上架 -->
                             <a class="m-l" href="#" th:if="${productInfo.productStatus} eq 1"
                                th:href="@{on(productId=${productInfo.productId})}">
-                                <i class="fa fa-arrow-up fa-lg"></i></a>
+                                <i class="fa fa-rotate-left fa-lg"></i></a>
 
                             <!-- 下架 -->
                             <a class="m-l" href="#" th:if="${productInfo.productStatus} eq 0"

@@ -27,7 +27,7 @@
         <!-- 通用部分 -->
         <div th:replace="module/nav_top::html"></div>
 
-<!-- ------------------  -->
+        <!-- ------------------  -->
 
         <!-- 第二块 tab栏 -->
         <div class="row  border-bottom">
@@ -35,10 +35,10 @@
                 <div class="tab_title">
                     <ul class="nav nav-pills">
                         <li class="current">
-                            <a href="/food/index">美食列表</a>
+                            <a href="/product/index" th:href="@{/seller/product/index}">美食列表</a>
                         </li>
                         <li>
-                            <a href="/food/cat">分类列表</a>
+                            <a href="/product/cat" th:href="@{/seller/category/index}">分类列表</a>
                         </li>
                     </ul>
                 </div>
@@ -149,19 +149,20 @@
                             </li>
 
                             <li th:class="${currentPage eq 1} ? 'active' : ''">
-                                <a th:unless="${currentPage} eq 1" th:href="@{index(page=${currentPage - 1}, size=${size})}">
+                                <a th:unless="${currentPage} eq 1"
+                                   th:href="@{index(page=${currentPage - 1}, size=${size})}">
                                     上一页</a>
                             </li>
 
                             <!-- 后台从 0 开始 后端会自动减 1 -->
-                            <li th:each="index : ${#numbers.sequence(1, productInfoPage.totalPages)}"
-                                th:class="${currentPage eq index} ? 'active' : ''">
-                                <a th:text="${index}" th:href="@{index(page=${index}, size=${size})}"></a>
+                            <li th:each="index : ${#numbers.sequence(0, productInfoPage.totalPages)}"
+                                th:class="${currentPage eq index + 1} ? 'active' : ''">
+                                <a th:text="${index + 1}" th:href="@{index(page=${index + 1}, size=${size})}"></a>
                             </li>
 
                             <li th:class="${currentPage eq productInfoPage.totalPages} ? 'active' : ''">
                                 <a th:unless="${currentPage} eq ${productInfoPage.totalPages}"
-                                   th:href="@{index(page=${currentPage+1}, size=${size})}">下一页</a>
+                                   th:href="@{index(page=${currentPage + 1}, size=${size})}">下一页</a>
                             </li>
 
                             <li>

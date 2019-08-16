@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,7 +15,9 @@ import java.util.Date;
 @DynamicUpdate
 @Data
 //@Table(name = "table_product_category")
-public class ProductCategory {
+public class ProductCategory implements Serializable {
+
+    private static final long serialVersionUID = 183952576791314816L;
 
     /**
      * 类目id

@@ -1,6 +1,9 @@
 package pers.emery.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import pers.emery.dataobject.ProductCategory;
 import pers.emery.repository.ProductCategoryRepository;
@@ -25,6 +28,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Cacheable(cacheNames = "category", key = "'all'")
     public List<ProductCategory> findAll() {
         return repository.findAll();
     }
@@ -35,6 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @CacheEvict(cacheNames = "category", key = "'all'")
     public ProductCategory save(ProductCategory productCategory) {
         return repository.save(productCategory);
     }

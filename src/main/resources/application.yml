@@ -13,6 +13,9 @@ spring:
     cache: false
     mode: HTML
 #    mode: LEGACYHTML5
+  redis:
+    host: 127.0.0.1
+    port: 16379
 debug: false
 server:
   servlet:

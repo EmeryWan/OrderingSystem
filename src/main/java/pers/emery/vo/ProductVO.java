@@ -3,6 +3,7 @@ package pers.emery.vo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +12,9 @@ import java.util.List;
  * @author emery
  */
 @Data
-public class ProductVO {
+public class ProductVO implements Serializable {
+
+    private static final long serialVersionUID = 5156917415764806627L;
 
     /**
      * 商品类目名

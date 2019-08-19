@@ -5,20 +5,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pers.emery.dto.OrderDTO;
+import pers.emery.enums.PayStatusEnum;
 import pers.emery.exception.SellException;
 import pers.emery.service.OrderService;
+import pers.emery.utils.ResultVOUtil;
+import pers.emery.vo.ResultVO;
 
 import java.util.Map;
 
 @Slf4j
 @Controller
-@RequestMapping("/seller/order")
+@RequestMapping("/seller")
 public class SellerOrderController {
 
     private final OrderService orderService;
@@ -28,9 +28,10 @@ public class SellerOrderController {
         this.orderService = orderService;
     }
 
-    @RequestMapping("/index")
+    @RequestMapping("/order/index")
     public ModelAndView index(@RequestParam(value = "page", defaultValue = "1") Integer page,
                               @RequestParam(value = "size", defaultValue = "10") Integer size,
+                              @RequestParam(value = "status", defaultValue = "-1") Integer status,
                               Map<String, Object> map) {
 
         // 分页信息
@@ -38,9 +39,14 @@ public class SellerOrderController {
         Page<OrderDTO> orderDTOPage = orderService.findList(pageRequest);
         log.info(orderDTOPage.getContent().toString());
 
+        if (status != -1) {
+            // 写一个新的 service 方法
+        }
+
         map.put("orderDTOPage", orderDTOPage);
         map.put("currentPage", page);
         map.put("size", size);
+        map.put("payStatusList", PayStatusEnum.values());
 
         return new ModelAndView("order/index", map);
     }
@@ -48,14 +54,14 @@ public class SellerOrderController {
     /**
      * 查看单个订单的详细信息
      */
-    @GetMapping("/info/{id}")
+    @GetMapping("/order/info/{id}")
     public ModelAndView info(@PathVariable String id,
                              Map<String, Object> map) {
         OrderDTO orderDTO = new OrderDTO();
         try {
             orderDTO = orderService.findById(id);
         } catch (SellException e) {
-            log.error("【卖家端查询订单详情】发生异常{}", e);
+            log.error("【卖家端查询订单详情】发生异常 {}", e);
             map.put("msg", e.getMessage());
             map.put("url", "/sell/seller/order/list");
             return new ModelAndView("common/error", map);
@@ -65,12 +71,23 @@ public class SellerOrderController {
         return new ModelAndView("order/info", map);
     }
 
+
     /**
      * 取消订单
      */
+    @ResponseBody
+    @DeleteMapping("/order/{id}")
+    public ResultVO cancel(@PathVariable String id) {
+        return ResultVOUtil.success();
+    }
 
     /**
      * 完结订单
      */
+    @ResponseBody
+    @PutMapping("/order/{id}")
+    public ResultVO finish(@PathVariable String id) {
+        return ResultVOUtil.success();
+    }
 
 }

@@ -1,5 +1,6 @@
 package pers.emery.utils;
 
+import pers.emery.enums.ResultEnum;
 import pers.emery.vo.ResultVO;
 
 /**
@@ -10,7 +11,7 @@ public class ResultVOUtil {
     public static ResultVO success(Object object) {
         ResultVO<Object> resultVO = new ResultVO<>();
 
-        resultVO.setCode(0);
+        resultVO.setCode(ResultEnum.SUCCESS.getCode());
         resultVO.setMsg("成功");
         resultVO.setData(object);
 

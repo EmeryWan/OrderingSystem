@@ -1,43 +1,98 @@
-{% extends "common/layout_main.html" %}
-{% block content %}
-<div class="row  border-bottom">
-    <div class="col-lg-12">
-        <div class="tab_title">
-            <ul class="nav nav-pills">
-                <li>
-                    <a href="{{ buildUrl('/food/index') }}">美食列表</a>
-                </li>
-                <li class="current">
-                    <a href="{{ buildUrl('/food/cat') }}">分类列表</a>
-                </li>
-            </ul>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>管理后台</title>
+    <link href="/bootstrap/bootstrap.min.css" th:href="@{/bootstrap/bootstrap.min.css}" rel="stylesheet">
+    <link href="/font-awesome/css/font-awesome.min.css" th:href="@{/font-awesome/css/font-awesome.min.css}"
+          rel="stylesheet">
+    <link href="/css/style.css" th:href="@{/css/global_style.css}" rel="stylesheet">
+</head>
+
+
+<body>
+
+<div id="wrapper">
+
+    <!-- 左边 nav -->
+    <!-- 通用部分 -->
+    <div th:replace="module/nav_left::html"></div>
+
+
+    <!-- 右边内容 -->
+    <div id="page-wrapper" class="gray-bg" style="background-color: #ffffff;">
+        <!-- 第一块 上面的顶栏 -->
+        <!-- 通用部分 -->
+        <div th:replace="module/nav_top::html"></div>
+
+        <!-- ------------------  -->
+        <!-- 第二块 tab栏 -->
+        <div class="row  border-bottom">
+            <div class="col-lg-12">
+                <div class="tab_title">
+                    <ul class="nav nav-pills">
+                        <li>
+                            <a href="" th:href="@{/seller/product/index}">美食列表</a>
+                        </li>
+                        <li class="current">
+                            <a href="" th:href="@{/seller/category/index}">分类列表</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
+
+        <div class="row m-t  wrap_category_set">
+            <div class="col-lg-12">
+                <h2 class="text-center">类目设置</h2>
+                <div class="form-horizontal m-t m-b">
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">类目编号:</label>
+                        <div class="col-lg-6">
+                            <input type="text" name="categoryType" class="form-control" placeholder="请输入类目编号"
+                                   value="" th:value="${categoryInfo} ? ${categoryInfo.categoryType} : ''">
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">类目名称:</label>
+                        <div class="col-lg-6">
+                            <input type="text" name="categoryName" class="form-control" placeholder="请输入类目名称"
+                                   value="" th:value="${categoryInfo} ? ${categoryInfo.categoryName} : ''">
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-lg-6 col-lg-offset-2">
+                            <input type="hidden" name="categoryId" th:if="${categoryInfo}"
+                                   th:value="${categoryInfo} ? ${categoryInfo.categoryId} : ''">
+                            <button class="btn btn-w-m btn-outline btn-primary save">保存</button>
+                            <a class="btn btn-w-m btn-outline btn-primary pull-right"
+                               href="" th:href="@{/seller/category/index}">返回</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--  --------------------------------------  -->
+
     </div>
+
 </div>
-<div class="row m-t  wrap_cat_set">
-	<div class="col-lg-12">
-		<h2 class="text-center">分类设置</h2>
-		<div class="form-horizontal m-t m-b">
-			<div class="form-group">
-				<label class="col-lg-2 control-label">分类名称:</label>
-				<div class="col-lg-10">
-					<input type="text" name="name" class="form-control" placeholder="请输入分类名称~~" value="111">
-				</div>
-			</div>
-			<div class="hr-line-dashed"></div>
-			<div class="form-group">
-				<label class="col-lg-2 control-label">权重:</label>
-				<div class="col-lg-10">
-					<input type="text" name="weight" class="form-control" placeholder="请输入分类名称~~" value="11">
-				</div>
-			</div>
-			<div class="hr-line-dashed"></div>
-			<div class="form-group">
-				<div class="col-lg-4 col-lg-offset-2">
-					<button class="btn btn-w-m btn-outline btn-primary save">保存</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-{% endblock %}
+<!-- 通用 html 部分 -->
+<script src="/plugins/jquery-2.1.1.js" th:src="@{/plugins/jquery-2.1.1.js}"></script>
+<script src="/bootstrap/bootstrap.min.js" th:src="@{/bootstrap/bootstrap.min.js}"></script>
+<script src="/plugins/layer/layer.js" th:src="@{/plugins/layer/layer.js}"></script>
+<script src="/js/common.js" th:src="@{/js/common.js}"></script>
+
+
+<script th:src="@{/js/category/set.js}"></script>
+</body>
+</html>

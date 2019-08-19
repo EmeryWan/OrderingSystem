@@ -1,6 +1,8 @@
 package pers.emery.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import java.util.Optional;
  * @author emery
  */
 @Service
+@CacheConfig(cacheNames = "product")
 public class ProductServiceImpl implements ProductService {
 
     private final ProductInfoRepository repository;
@@ -40,6 +43,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Cacheable(key = "'all'")
     public Page<ProductInfo> findAll(Pageable pageable) {
         return repository.findAll(pageable);
     }

@@ -41,7 +41,6 @@ public class BuyerProductController {
 
     /**
      * 查询所有商品
-     * @return
      */
     @GetMapping("/list")
     public ResultVO list() {
@@ -80,7 +79,7 @@ public class BuyerProductController {
             productVOList.add(productVO);
         }
 
-        System.out.println(productVOList);
+        // System.out.println(productVOList);
 
         return ResultVOUtil.success(productVOList);
     }

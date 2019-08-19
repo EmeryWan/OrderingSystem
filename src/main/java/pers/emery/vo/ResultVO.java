@@ -2,13 +2,17 @@ package pers.emery.vo;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  *
  * @author emery
  * @param <T>
  */
 @Data
-public class ResultVO<T> {
+public class ResultVO<T> implements Serializable {
+
+    private static final long serialVersionUID = -8833037746961444565L;
 
     /**
      * 状态码

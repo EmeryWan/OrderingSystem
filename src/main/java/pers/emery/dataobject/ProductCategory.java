@@ -1,7 +1,10 @@
 package pers.emery.dataobject;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
+import pers.emery.enums.DeleteStatusEnum;
+import pers.emery.utils.EnumUtil;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -36,9 +39,15 @@ public class ProductCategory implements Serializable {
      */
     private Integer categoryType;
 
+    private Integer hasDelete;
+
     private Date createTime;
 
     private Date updateTime;
+
+    {
+        hasDelete = DeleteStatusEnum.NO.getCode();
+    }
 
     public ProductCategory() {
     }
@@ -46,6 +55,11 @@ public class ProductCategory implements Serializable {
     public ProductCategory(String categoryName, Integer categoryType) {
         this.categoryName = categoryName;
         this.categoryType = categoryType;
+    }
+
+    @JsonIgnore
+    public DeleteStatusEnum getDeleteStatusEnum() {
+        return EnumUtil.getByCode(hasDelete, DeleteStatusEnum.class);
     }
 
 }

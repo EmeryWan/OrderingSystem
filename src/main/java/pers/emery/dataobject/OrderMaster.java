@@ -7,6 +7,7 @@ import pers.emery.enums.PayStatusEnum;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -18,7 +19,9 @@ import java.util.Date;
 @Data
 @Entity
 @DynamicUpdate
-public class OrderMaster {
+public class OrderMaster implements Serializable {
+
+    private static final long serialVersionUID = 2360601257583535658L;
 
     /**
      * 订单id

@@ -29,7 +29,7 @@ import java.util.Map;
  */
 @Slf4j
 @Controller
-@RequestMapping("/seller/product")
+@RequestMapping("/seller")
 public class SellerProductController {
 
     private ProductService productService;
@@ -42,15 +42,11 @@ public class SellerProductController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/test")
-    public String test() {
-        return "index/index";
-    }
 
     /**
      * 列出所有的信息
      */
-    @GetMapping("/index")
+    @GetMapping("/product/index")
     public ModelAndView list(@RequestParam(value = "page", defaultValue = "1") Integer page,
                              @RequestParam(value = "size", defaultValue = "10") Integer size,
                              Map<String, Object> map) {
@@ -70,7 +66,7 @@ public class SellerProductController {
     /**
      * 显示单个商品信息
      */
-    @GetMapping("/info/{id}")
+    @GetMapping("/product/info/{id}")
     public ModelAndView info(@PathVariable String id,
                              Map<String, Object> map) {
         ProductInfo productInfo = productService.findById(id).get();
@@ -81,7 +77,7 @@ public class SellerProductController {
     /**
      * 添加，修改页面
      */
-    @RequestMapping("/set")
+    @RequestMapping("/product/set")
     public ModelAndView index(@RequestParam(value = "productId", required = false) String productId, Map<String, Object> map) {
         if (!StringUtils.isEmpty(productId)) {
             ProductInfo productInfo = productService.findById(productId).get();
@@ -95,11 +91,14 @@ public class SellerProductController {
         return new ModelAndView("product/set", map);
     }
 
+    // 添加更改成 post
+    // 更新 更改成 put
     /**
      * 添加，
-     * 更新
+     *
+     * 更新 使用的是 save
      */
-    @PostMapping("/save")
+    @PostMapping("/product/save")
     public ModelAndView save(@Valid ProductForm form, BindingResult bindingResult,
                              Map<String, Object> map) {
         if (bindingResult.hasErrors()) {
@@ -128,10 +127,11 @@ public class SellerProductController {
         return new ModelAndView("common/success", map);
     }
 
+    // 改成 put 请求
     /**
      * 上架
      */
-    @RequestMapping("/on")
+    @RequestMapping("/product/on")
     public ModelAndView onSale(@RequestParam("productId") String productId,
                                Map<String, Object> map) {
         try {
@@ -147,10 +147,12 @@ public class SellerProductController {
         return new ModelAndView("common/success", map);
     }
 
+
+    // 改成 put请求
     /**
      * 下架
      */
-    @RequestMapping("/off")
+    @RequestMapping("/product/off")
     public ModelAndView offSale(@RequestParam("productId") String productId,
                                 Map<String, Object> map) {
         try {

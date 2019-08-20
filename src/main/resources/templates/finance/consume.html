@@ -32,43 +32,68 @@
             <div class="col-lg-12">
                 <div class="tab_title">
                     <ul class="nav nav-pills">
-                        <li>
-                            <a href="{{ buildUrl('/member/index') }}">会员列表</a>
-                        </li>
                         <li class="current">
-                            <a href="{{ buildUrl('/member/comment') }}">会员评论</a>
+                            <a href="/finance/index" th:href="@{/seller/finance/index}">财务统计</a>
+                        </li>
+                        <li>
+                            <a href="/stat/sales" th:href="@{/seller/finance/sales}">售卖统计</a>
+                        </li>
+                        <li>
+                            <a href="/stat/consume" th:href="@{/seller/finance/consume}">会员消费统计</a>
+                        </li>
+                        <li>
+                            <a href="/stat/share" th:href="@{/seller/finance/share}">分享统计</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
+        <div class="row m-t">
+            <div class="col-lg-12 m-t">
+                <form class="form-inline" id="search_form_wrap">
+                    <div class="row p-w-m">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" placeholder="请选择开始时间" name="date_from" class="form-control"
+                                       value="2018-05-08">
+                            </div>
+                        </div>
+                        <div class="form-group m-r m-l">
+                            <label>至</label>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" placeholder="请选择结束时间" name="date_to" class="form-control"
+                                       value="2018-06-07">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <a class="btn btn-w-m btn-outline btn-primary search">搜索</a>
+                        </div>
+                    </div>
+                    <hr>
+                </form>
                 <table class="table table-bordered m-t">
                     <thead>
                     <tr>
-                        <th>头像</th>
-                        <th>姓名</th>
-                        <th>美餐</th>
-                        <th>评论内容</th>
-                        <th>打分</th>
+                        <th>日期</th>
+                        <th>会员名称</th>
+                        <th>消费总额</th>
+                        <th>分享次数</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td>
-                            <img alt="image" class="img-circle" src="{{ buildStaticUrl('/images/common/avatar.png') }}"
-                                 style="width: 40px;height: 40px;">
-                        </td>
+                        <td>2018-06-07</td>
                         <td>
                             编程浪子
                         </td>
-                        <td>小鸡炖蘑菇</td>
-                        <td>非常愉快的订餐服务</td>
-                        <td>8</td>
+                        <td>1003.00</td>
+                        <td>57</td>
                     </tr>
                     </tbody>
                 </table>
+                <!--分页代码已被封装到统一模板文件中-->
                 <div class="row">
                     <div class="col-lg-12">
                         <span class="pagination_count" style="line-height: 40px;">共1条记录 | 每页50条</span>
@@ -79,8 +104,10 @@
                 </div>
             </div>
         </div>
+        <!--  --------------------------------------  -->
     </div>
 </div>
+
 <!-- 通用 html 部分 -->
 <script src="/plugins/jquery-2.1.1.js" th:src="@{/plugins/jquery-2.1.1.js}"></script>
 <script src="/bootstrap/bootstrap.min.js" th:src="@{/bootstrap/bootstrap.min.js}"></script>

@@ -27600,7 +27600,7 @@ UE.ui = baidu.editor.ui = {};
             this.getDom('content').innerHTML = content;
         },
         setType: function(type){
-            type = type || 'info';
+            type = type || 'static.js.product.info';
             var body = this.getDom('body');
             body.className = body.className.replace(/edui-message-type-[\w-]+/, 'edui-message-type-' + type);
         },

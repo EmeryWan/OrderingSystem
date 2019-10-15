@@ -1849,7 +1849,7 @@
             RuntimeClient.call( this, 'Image' );
     
             this.on( 'load', function() {
-                this._info = this.exec('info');
+                this._info = this.exec('static.js.product.info');
                 this._meta = this.exec('meta');
             });
         }
@@ -6560,7 +6560,7 @@
             loadFromBlob: function( blob ) {
                 var owner = this.owner;
     
-                owner.info() && this.flashExec( 'Image', 'info', owner.info() );
+                owner.info() && this.flashExec( 'Image', 'static.js.product.info', owner.info() );
                 owner.meta() && this.flashExec( 'Image', 'meta', owner.meta() );
     
                 this.flashExec( 'Image', 'loadFromBlob', blob.uid );

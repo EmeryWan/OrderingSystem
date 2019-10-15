@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>管理后台</title>
-    <link href="/bootstrap/bootstrap.min.css" th:href="@{/bootstrap/bootstrap.min.css}" rel="stylesheet">
-    <link href="/font-awesome/css/font-awesome.min.css" th:href="@{/font-awesome/css/font-awesome.min.css}"
+    <link href="../../static/bootstrap/bootstrap.min.css" th:href="@{/bootstrap/bootstrap.min.css}" rel="stylesheet">
+    <link href="../../static/font-awesome/css/font-awesome.min.css" th:href="@{/font-awesome/css/font-awesome.min.css}"
           rel="stylesheet">
-    <link href="/css/style.css" th:href="@{/css/global_style.css}" rel="stylesheet">
+    <link href="../../static/css/global_style.css" th:href="@{/css/global_style.css}" rel="stylesheet">
 </head>
 
 
@@ -113,20 +113,23 @@
                         <td th:text="${productInfo.productStatusEnum.message}"></td>
                         <td>
                             <!-- 详细信息 -->
-                            <a href="/product/info" th:href="@{'info/' + ${productInfo.productId}}">
+                            <a href="" th:href="@{'info/' + ${productInfo.productId}}">
                                 <i class="fa fa-info-circle fa-lg"></i></a>
                             <!-- 修改 -->
-                            <a class="m-l" href="/product/set" th:href="@{set(productId=${productInfo.productId})}">
+                            <a class="m-l" href="" th:href="@{set(productId=${productInfo.productId})}">
                                 <i class="fa fa-edit fa-lg"></i></a>
 
                             <!-- 上架 -->
-                            <a class="m-l" href="#" th:if="${productInfo.productStatus} eq 1"
-                               th:href="@{on(productId=${productInfo.productId})}">
-                                <i class="fa fa-rotate-left fa-lg"></i></a>
+                            <a class="m-l on" href="javascript:void(0);" th:data="${productInfo.productId}"
+                               th:if="${productInfo.productStatus} eq 1">
+                                <!-- th:href="@{on(productId=${productInfo.productId})}"-->
+                                <i class="fa fa-rotate-left fa-lg"></i>
+                            </a>
 
                             <!-- 下架 -->
-                            <a class="m-l" href="#" th:if="${productInfo.productStatus} eq 0"
-                               th:href="@{off(productId=${productInfo.productId})}">
+                            <a class="m-l off" href="javascript:void(0);" th:data="${productInfo.productId}"
+                               th:if="${productInfo.productStatus} eq 0">
+                                <!-- th:href="@{off(productId=${productInfo.productId})}"-->
                                 <i class="fa fa-arrow-down fa-lg"></i></a>
                         </td>
                     </tr>
@@ -155,8 +158,11 @@
                             </li>
 
                             <!-- 后台从 0 开始 后端会自动减 1 -->
-                            <li th:each="index : ${#numbers.sequence(0, productInfoPage.totalPages)}"
-                                th:class="${currentPage eq index + 1} ? 'active' : ''">
+                            <!-- <li th:each="index : ${#numbers.sequence(0, productInfoPage.totalPages - 1)}" -->
+                            <li th:each="index : ${#numbers.sequence(currentPage - 2, currentPage + 1)}"
+                                th:class="${currentPage eq index + 1} ? 'active' : ''"
+                                th:if="${index} gt -1 and ${index} lt ${productInfoPage.totalPages}"
+                            >
                                 <a th:text="${index + 1}" th:href="@{index(page=${index + 1}, size=${size})}"></a>
                             </li>
 
@@ -183,10 +189,12 @@
 </div>
 
 <!-- 通用 html 部分 -->
-<script src="/plugins/jquery-2.1.1.js" th:src="@{/plugins/jquery-2.1.1.js}"></script>
-<script src="/bootstrap/bootstrap.min.js" th:src="@{/bootstrap/bootstrap.min.js}"></script>
-<script src="/plugins/layer/layer.js" th:src="@{/plugins/layer/layer.js}"></script>
-<script src="/js/common.js" th:src="@{/js/common.js}"></script>
+<script src="../../static/plugins/jquery-2.1.1.js" th:src="@{/plugins/jquery-2.1.1.js}"></script>
+<script src="../../static/bootstrap/bootstrap.min.js" th:src="@{/bootstrap/bootstrap.min.js}"></script>
+<script src="../../static/plugins/layer/layer.js" th:src="@{/plugins/layer/layer.js}"></script>
+<script src="../../static/js/common.js" th:src="@{/js/common.js}"></script>
+
+<script th:src="@{/js/product/index.js}"></script>
 
 </body>
 </html>

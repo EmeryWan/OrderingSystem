@@ -33,10 +33,10 @@
                 <div class="tab_title">
                     <ul class="nav nav-pills">
                         <li class="current">
-                            <a href="{{ buildUrl('/member/index') }}">会员列表</a>
+                            <a href="/member/index" th:href="@{/seller/member/index}">会员列表</a>
                         </li>
                         <li>
-                            <a href="{{ buildUrl('/member/comment') }}">会员评论</a>
+                            <a href="/member/comment" th:href="@{/seller/member/comment}">会员评论</a>
                         </li>
                     </ul>
                 </div>
@@ -78,16 +78,16 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td><img alt="image" class="img-circle" src="{{ buildStaticUrl('/images/common/avatar.png') }}"
+                        <td><img alt="image" class="img-circle" th:src="@{/images/common/avatar.png}"
                                  style="width: 40px;height: 40px;"></td>
-                        <td>编程浪子</td>
+                        <td>一层</td>
                         <td>未填写</td>
                         <td>正常</td>
                         <td>
-                            <a href="{{ buildUrl('/member/info') }}">
-                                <i class="fa fa-eye fa-lg"></i>
+                            <a href="/member/info">
+                                <i class="fa fa-info-circle fa-lg"></i>
                             </a>
-                            <a class="m-l" href="{{ buildUrl('/member/set') }}">
+                            <a class="m-l" href="/member/set">
                                 <i class="fa fa-edit fa-lg"></i>
                             </a>
 

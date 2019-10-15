@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import pers.emery.convertor.OrderMaster2OrderDTOConverter;
@@ -45,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderDetailRepository orderDetailRepository;
 
     @Override
-    @Transactional
+    @Transactional(isolation = Isolation.DEFAULT)
     public OrderDTO create(OrderDTO orderDTO) {
 
         String orderId = KeyUtil.genUniqueKey();
@@ -54,12 +55,11 @@ public class OrderServiceImpl implements OrderService {
 
         // 1 查询商品 数量 价格
         for (OrderDetail orderDetail : orderDTO.getOrderDetailList()) {
-            Optional<ProductInfo> productInfoOptional = productService.findById(orderDetail.getProductId());
-            ProductInfo productInfo = productInfoOptional.orElseThrow(() -> new SellException(ResultEnum.PRODUCT_NOT_EXIST));
+            ProductInfo productInfo = productService.findById(orderDetail.getProductId());
 
-            // if (productInfo == null) {
-            //     throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
-            // }
+             if (productInfo == null) {
+                 throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+             }
 
             // 2 计算订单总价
             orderAmount = productInfo.getProductPrice()

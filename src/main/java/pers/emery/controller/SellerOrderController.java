@@ -61,7 +61,7 @@ public class SellerOrderController {
         try {
             orderDTO = orderService.findById(id);
         } catch (SellException e) {
-            log.error("【卖家端查询订单详情】发生异常 {}", e);
+            log.error("卖家端查询订单详情-发生异常-{}", e.getMessage());
             map.put("msg", e.getMessage());
             map.put("url", "/sell/seller/order/list");
             return new ModelAndView("common/error", map);

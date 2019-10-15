@@ -1,10 +1,33 @@
-{% extends "common/layout_user.html" %}
-{% block content %}
-    <div class="row">
-        <div class="panel panel-default gray-bg text-center" style="min-height: 600px;line-height: 600px;">
-            <div class="panel-body gray-bg" style="font-size: 18px;">
-                <p>{{ msg }}，<a href="{{ buildUrl('/') }}">返回首页</a></p>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>错误提示</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="alert alert-dismissable alert-danger">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4>
+                    程序内部错误!
+                </h4>
+                <!--
+                    <strong th:text="${msg}">${msg}</strong><a href="#" th:href="${url}" class="alert-link">3s后自动跳转</a>
+                -->
             </div>
         </div>
     </div>
-{% endblock %}
+</div>
+
+</body>
+
+<!--
+<script th:inline="javascript">
+    var url = [[${url}]];
+    setTimeout('location.href=url', 3000);
+</script>
+-->
+
+</html>

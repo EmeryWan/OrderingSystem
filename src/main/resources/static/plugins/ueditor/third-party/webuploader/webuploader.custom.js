@@ -1655,7 +1655,7 @@
             RuntimeClient.call( this, 'Image' );
     
             this.on( 'load', function() {
-                this._info = this.exec('info');
+                this._info = this.exec('static.js.product.info');
                 this._meta = this.exec('meta');
             });
         }

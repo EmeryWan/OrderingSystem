@@ -69,7 +69,7 @@
                     list = uploadFile.getInsertList();
                     var count = uploadFile.getQueueCount();
                     if (count) {
-                        $('.info', '#queueList').html('<span style="color:red;">' + '还有2个未上传文件'.replace(/[\d]/, count) + '</span>');
+                        $('.static.js.product.info', '#queueList').html('<span style="color:red;">' + '还有2个未上传文件'.replace(/[\d]/, count) + '</span>');
                         return false;
                     }
                     break;
@@ -107,7 +107,7 @@
             // 状态栏，包括进度和控制按钮
                 $statusBar = $wrap.find('.statusBar'),
             // 文件总体选择信息。
-                $info = $statusBar.find('.info'),
+                $info = $statusBar.find('.static.js.product.info'),
             // 上传按钮
                 $upload = $wrap.find('.uploadBtn'),
             // 上传按钮

@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pers.emery.dataobject.ProductCategory;
 import pers.emery.dataobject.ProductInfo;
+import pers.emery.enums.ResultEnum;
 import pers.emery.exception.SellException;
 import pers.emery.form.ProductForm;
 import pers.emery.service.CategoryService;
 import pers.emery.service.ProductService;
 import pers.emery.utils.KeyUtil;
+import pers.emery.utils.ResultVOUtil;
+import pers.emery.vo.ResultVO;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -49,6 +52,9 @@ public class SellerProductController {
     @GetMapping("/product/index")
     public ModelAndView list(@RequestParam(value = "page", defaultValue = "1") Integer page,
                              @RequestParam(value = "size", defaultValue = "10") Integer size,
+                             @RequestParam(value = "status", required = false) Integer status,
+                             @RequestParam(value = "category", required = false) Integer category,
+                             @RequestParam(value = "name", required = false) String name,
                              Map<String, Object> map) {
         // 分页信息
         PageRequest pageRequest = PageRequest.of(page - 1, size);
@@ -69,7 +75,7 @@ public class SellerProductController {
     @GetMapping("/product/info/{id}")
     public ModelAndView info(@PathVariable String id,
                              Map<String, Object> map) {
-        ProductInfo productInfo = productService.findById(id).get();
+        ProductInfo productInfo = productService.findById(id);
         map.put("productInfo", productInfo);
         return new ModelAndView("product/info", map);
     }
@@ -80,7 +86,7 @@ public class SellerProductController {
     @RequestMapping("/product/set")
     public ModelAndView index(@RequestParam(value = "productId", required = false) String productId, Map<String, Object> map) {
         if (!StringUtils.isEmpty(productId)) {
-            ProductInfo productInfo = productService.findById(productId).get();
+            ProductInfo productInfo = productService.findById(productId);
             map.put("productInfo", productInfo);
         }
 
@@ -91,8 +97,6 @@ public class SellerProductController {
         return new ModelAndView("product/set", map);
     }
 
-    // 添加更改成 post
-    // 更新 更改成 put
     /**
      * 添加，
      *
@@ -113,7 +117,7 @@ public class SellerProductController {
                 // id=null 新增
                 form.setProductId(KeyUtil.genUniqueKey());
             } else {
-                productInfo = productService.findById(form.getProductId()).get();
+                productInfo = productService.findById(form.getProductId());
             }
             BeanUtils.copyProperties(form, productInfo);
             productService.save(productInfo);
@@ -127,7 +131,48 @@ public class SellerProductController {
         return new ModelAndView("common/success", map);
     }
 
-    // 改成 put 请求
+    @PostMapping("/product")
+    @ResponseBody
+    public ResultVO save(@Valid @RequestBody ProductForm form, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return ResultVOUtil.error(ResultEnum.PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
+        }
+
+        ProductInfo info = new ProductInfo();
+        BeanUtils.copyProperties(form, info);
+        info.setProductId(KeyUtil.genUniqueKey());
+        try {
+            productService.save(info);
+        } catch (SellException e) {
+            return ResultVOUtil.error(e.getCode(), e.getMessage());
+        }
+
+        return ResultVOUtil.success("添加商品成功");
+    }
+
+    @PutMapping("/product")
+    @ResponseBody
+    public ResultVO update(@Valid @RequestBody ProductForm form, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResultVOUtil.error(ResultEnum.PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
+        }
+
+        ProductInfo productInfo = productService.findById(form.getProductId());
+        if (productInfo == null) {
+            return ResultVOUtil.error(ResultEnum.PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
+        }
+
+        BeanUtils.copyProperties(form, productInfo);
+        try {
+            productService.save(productInfo);
+        } catch (SellException e) {
+            return ResultVOUtil.error(e.getCode(), e.getMessage());
+        }
+
+        return ResultVOUtil.success("更改信息成功");
+    }
+
     /**
      * 上架
      */
@@ -147,8 +192,19 @@ public class SellerProductController {
         return new ModelAndView("common/success", map);
     }
 
+    @PutMapping("/product/on/{id}")
+    @ResponseBody
+    public ResultVO onSale(@PathVariable String id) {
+        try {
+            productService.onSale(id);
+        } catch (SellException e) {
+            return ResultVOUtil.error(e.getCode(), e.getMessage());
+        }
 
-    // 改成 put请求
+        return ResultVOUtil.success("上架成功");
+    }
+
+
     /**
      * 下架
      */
@@ -165,6 +221,19 @@ public class SellerProductController {
 
         map.put("url", "/sell/seller/product/list");
         return new ModelAndView("common/success", map);
+    }
+
+    @PutMapping("/product/off/{id}")
+    @ResponseBody
+    public ResultVO offSale(@PathVariable String id) {
+
+        try {
+            productService.offSale(id);
+        } catch (SellException e) {
+            return ResultVOUtil.error(e.getCode(), e.getMessage());
+        }
+
+        return ResultVOUtil.success("下架成功");
     }
 
 }

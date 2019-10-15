@@ -11,7 +11,7 @@ import java.util.Map;
 @Slf4j
 @Controller
 @RequestMapping("/seller")
-public class SellFinanceController {
+public class SellerFinanceController {
 
     /**
      * 财务营收页面

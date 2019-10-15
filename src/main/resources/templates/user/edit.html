@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>管理后台</title>
-    <link href="/bootstrap/bootstrap.min.css" th:href="@{/bootstrap/bootstrap.min.css}" rel="stylesheet">
-    <link href="/font-awesome/css/font-awesome.min.css" th:href="@{/font-awesome/css/font-awesome.min.css}"
+    <link href="../../static/bootstrap/bootstrap.min.css" th:href="@{/bootstrap/bootstrap.min.css}" rel="stylesheet">
+    <link href="../../static/font-awesome/css/font-awesome.min.css" th:href="@{/font-awesome/css/font-awesome.min.css}"
           rel="stylesheet">
-    <link href="/css/style.css" th:href="@{/css/global_style.css}" rel="stylesheet">
+    <link href="../../static/css/global_style.css" th:href="@{/css/global_style.css}" rel="stylesheet">
 </head>
 
 
@@ -33,10 +33,10 @@
                 <div class="tab_title">
                     <ul class="nav nav-pills">
                         <li class="current">
-                            <a href="{{ buildUrl('/user/edit') }}">信息编辑</a>
+                            <a href="/user/edit" th:href="@{/seller/user/edit}">信息编辑</a>
                         </li>
                         <li>
-                            <a href="{{ buildUrl('/user/edit') }}">修改密码</a>
+                            <a href="/user/edit" th:href="@{/seller/user/reset}">修改密码</a>
                         </li>
                     </ul>
                 </div>
@@ -49,8 +49,8 @@
                     <div class="form-group">
                         <label class="col-lg-2 control-label">手机:</label>
                         <div class="col-lg-10">
-                            <input type="text" name="mobile" class="form-control" placeholder="请输入手机~~" readonly=""
-                                   value="11012031511">
+                            <input type="text" name="mobile" class="form-control" placeholder="请输入手机" readonly=""
+                                   value="">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -58,7 +58,7 @@
                     <div class="form-group">
                         <label class="col-lg-2 control-label">姓名:</label>
                         <div class="col-lg-10">
-                            <input type="text" name="nickname" class="form-control" placeholder="请输入姓名~~" value="编程浪子2">
+                            <input type="text" name="nickname" class="form-control" placeholder="请输入姓名" value="">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
@@ -66,8 +66,8 @@
                     <div class="form-group">
                         <label class="col-lg-2 control-label">邮箱:</label>
                         <div class="col-lg-10">
-                            <input type="text" name="email" class="form-control" placeholder="请输入邮箱~~"
-                                   value="apanly@163.com">
+                            <input type="text" name="email" class="form-control" placeholder="请输入邮箱"
+                                   value="">
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>

@@ -8,18 +8,26 @@ import pers.emery.vo.ResultVO;
  */
 public class ResultVOUtil {
 
-    public static ResultVO success(Object object) {
+    public static ResultVO success(Object object, String msg) {
         ResultVO<Object> resultVO = new ResultVO<>();
 
         resultVO.setCode(ResultEnum.SUCCESS.getCode());
-        resultVO.setMsg("成功");
+        resultVO.setMsg(msg);
         resultVO.setData(object);
 
         return resultVO;
     }
 
+    public static ResultVO success(Object object) {
+        return success(object, "成功");
+    }
+
+    public static ResultVO success(String msg) {
+        return success(null, msg);
+    }
+
     public static ResultVO success() {
-        return success(null);
+        return success(null, null);
     }
 
     public static ResultVO error(Integer code, String msg) {

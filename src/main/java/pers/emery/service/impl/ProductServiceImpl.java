@@ -2,6 +2,7 @@ package pers.emery.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,22 +34,25 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public Optional<ProductInfo> findById(String productId) {
-        return repository.findById(productId);
+    @Cacheable(key = "'id_' + #productId", unless="#result == null")
+    public ProductInfo findById(String productId) {
+        return repository.findById(productId).orElse(null);
     }
 
     @Override
+    @Cacheable(key = "'up_all'")
     public List<ProductInfo> findUpAll() {
         return repository.findByProductStatus(ProductStatusEnum.UP.getCode());
     }
 
     @Override
-    @Cacheable(key = "'all'")
+//    @Cacheable(key = "'all'")
     public Page<ProductInfo> findAll(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
     @Override
+    @CachePut(key = "'id_' + #productInfo.productId")
     public ProductInfo save(ProductInfo productInfo) {
         return repository.save(productInfo);
     }

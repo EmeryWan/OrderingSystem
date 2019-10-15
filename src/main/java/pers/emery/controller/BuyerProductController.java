@@ -41,7 +41,6 @@ public class BuyerProductController {
 
     /**
      * 查询所有商品
-     * @return
      */
     @GetMapping("/list")
     public ResultVO list() {
@@ -54,7 +53,7 @@ public class BuyerProductController {
 
         // 查询上架商品中包含的类目
         List<Integer> categoryTypeList = productInfoListList.stream()
-                .map(e -> e.getCategoryType())
+                .map(ProductInfo::getCategoryType)
                 .collect(Collectors.toList());
         System.out.println(categoryTypeList);
         List<ProductCategory> productCategoryList = categoryService.findByCategoryTypeIn(categoryTypeList);
@@ -80,7 +79,7 @@ public class BuyerProductController {
             productVOList.add(productVO);
         }
 
-        System.out.println(productVOList);
+        // System.out.println(productVOList);
 
         return ResultVOUtil.success(productVOList);
     }

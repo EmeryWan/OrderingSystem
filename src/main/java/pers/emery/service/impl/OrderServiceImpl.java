@@ -4,10 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import pers.emery.convertor.OrderMaster2OrderDTOConverter;
 import pers.emery.dataobject.OrderDetail;
 import pers.emery.dataobject.OrderMaster;
 import pers.emery.dataobject.ProductInfo;
@@ -26,6 +29,7 @@ import pers.emery.utils.KeyUtil;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderDetailRepository orderDetailRepository;
 
     @Override
-    @Transactional
+    @Transactional(isolation = Isolation.DEFAULT)
     public OrderDTO create(OrderDTO orderDTO) {
 
         String orderId = KeyUtil.genUniqueKey();
@@ -51,10 +55,11 @@ public class OrderServiceImpl implements OrderService {
 
         // 1 查询商品 数量 价格
         for (OrderDetail orderDetail : orderDTO.getOrderDetailList()) {
-            ProductInfo productInfo = productService.findOne(orderDetail.getProductId());
-            if (productInfo == null) {
-                throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
-            }
+            ProductInfo productInfo = productService.findById(orderDetail.getProductId());
+
+             if (productInfo == null) {
+                 throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+             }
 
             // 2 计算订单总价
             orderAmount = productInfo.getProductPrice()
@@ -87,20 +92,21 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDTO findOne(String orderId) {
+    public OrderDTO findById(String orderId) {
 
-        OrderMaster orderMaster = orderMasterRepository.findOne(orderId);
-        if (orderMaster == null) {
+        Optional<OrderMaster> orderMaster = orderMasterRepository.findById(orderId);
+        if (!orderMaster.isPresent()) {
             throw new SellException(ResultEnum.ORDERDETAIL_NOT_EXIST);
         }
 
-        List<OrderDetail> orderDetailList = orderDetailRepository.findByOrOrderId(orderId);
+        // 查询当前订单明细
+        List<OrderDetail> orderDetailList = orderDetailRepository.findByOrderId(orderId);
         if (CollectionUtils.isEmpty(orderDetailList)) {
             throw new SellException(ResultEnum.ORDERDETAIL_NOT_EXIST);
         }
 
         OrderDTO orderDTO = new OrderDTO();
-        BeanUtils.copyProperties(orderMaster, orderDTO);
+        BeanUtils.copyProperties(orderMaster.get(), orderDTO);
         orderDTO.setOrderDetailList(orderDetailList);
 
         return orderDTO;
@@ -111,8 +117,9 @@ public class OrderServiceImpl implements OrderService {
 
         Page<OrderMaster> orderMasterPage = orderMasterRepository.findAll(pageable);
 
+        List<OrderDTO> orderDTOList = OrderMaster2OrderDTOConverter.convert(orderMasterPage.getContent());
 
-        return null;
+        return new PageImpl<>(orderDTOList, pageable, orderMasterPage.getTotalElements());
     }
 
     @Override

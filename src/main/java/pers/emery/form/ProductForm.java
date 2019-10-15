@@ -2,6 +2,7 @@ package pers.emery.form;
 
 import lombok.Data;
 
+import javax.validation.constraints.Email;
 import java.math.BigDecimal;
 
 @Data

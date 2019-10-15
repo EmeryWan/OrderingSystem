@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 左边 nav -->
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+
+            <!-- logo -->
+            <li class="nav-header">
+                <div class="profile-element text-center">
+                    <img alt="image" class="img-circle" src="/images/common/logo.png"
+                         th:src="@{/images/common/logo.png}"/>
+                    <p class="text-muted">一层</p>
+                </div>
+                <div class="logo-element">
+                    <img alt="image" class="img-circle" src="/images/common/logo.png"
+                         th:src="@{/images/common/logo.png}"/>
+                </div>
+            </li>
+
+            <!-- 侧栏 -->
+            <li class="default">
+                <a href="/" th:href="@{/seller}"><i class="fa fa-dashboard fa-lg"></i>
+                    <span class="nav-label">后台状态</span></a>
+            </li>
+
+            <li class="product">
+                <a href="/product/index" th:href="@{/seller/product/index}"><i class="fa fa-book fa-lg"></i>
+                    <span class="nav-label">商品管理</span></a>
+            </li>
+            <li class="category">
+                <a href="/category/index" th:href="@{/seller/category/index}"><i class="fa fa-book fa-lg"></i>
+                    <span class="nav-label">类目管理</span></a>
+            </li>
+            <li class="order">
+                <a href="/order/index" th:href="@{/seller/order/index}"><i class="fa fa-rmb fa-lg"></i>
+                    <span class="nav-label">订单管理</span></a>
+            </li>
+            <li class="finance">
+                <a href="/finance/index" th:href="@{/seller/finance/index}"><i class="fa fa-bar-chart fa-lg"></i>
+                    <!-- order_detail -->
+                    <span class="nav-label">财务管理</span></a>
+            </li>
+            <!--
+            <li class="account">
+                <a href="/account/index"><i class="fa fa-user fa-lg"></i>
+                    <span class="nav-label">账号管理</span></a>
+            </li>
+            -->
+            <li class="member">
+                <a href="/member/index" th:href="@{/seller/member/index}"><i class="fa fa-group fa-lg"></i>
+                    <span class="nav-label">会员列表</span></a>
+            </li>
+        </ul>
+
+    </div>
+</nav>
+
+</html>

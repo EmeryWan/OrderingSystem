@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:13306/sell?characterEncoding=utf-8&useSSL=false
+    username: emery
+    password: desktop
+  jpa:
+    show-sql: true
+    # 一个 waring 要求设置为 false
+    open-in-view: false
+  thymeleaf:
+    # 开发时禁用缓存
+    cache: false
+    mode: HTML
+  #    mode: LEGACYHTML5
+  redis:
+    host: 127.0.0.1
+    port: 16379
+debug: false
+server:
+  servlet:
+    context-path: /sell

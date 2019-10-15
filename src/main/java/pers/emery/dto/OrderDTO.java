@@ -9,12 +9,15 @@ import pers.emery.enums.PayStatusEnum;
 import pers.emery.utils.EnumUtil;
 import pers.emery.utils.serializer.Date2LongSerializer;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 @Data
-public class OrderDTO {
+public class OrderDTO implements Serializable {
+
+    private static final long serialVersionUID = -7458472389891756047L;
 
     /**
      * 订单id

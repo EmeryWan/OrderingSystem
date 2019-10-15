@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 右边内容有三块 -->
+<!-- 第一块 上面的顶栏 -->
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="javascript:void(0);">
+                <i class="fa fa-bars"></i> </a>
+        </div>
+        <ul class="nav navbar-top-links navbar-right">
+            <li>
+                <span class="m-r-sm text-muted welcome-message">
+                    欢迎使用订餐管理后台
+                </span>
+            </li>
+            <li class="dropdown user_info">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+                    <img alt="image" class="img-circle"
+                         src="/images/common/avatar.png" th:src="@{/images/common/avatar.png}"/>
+                </a>
+                <ul class="dropdown-menu dropdown-messages">
+                    <li>
+                        <div class="dropdown-messages-box">
+                            姓名：一层 <a href="/user/edit" th:href="@{/seller/user/edit}" class="pull-right">编辑</a>
+                        </div>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <div class="dropdown-messages-box">
+                            手机号码：12311112222
+                        </div>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <div class="link-block text-center">
+                            <a class="pull-left" href="/user/reset" th:href="@{/seller/user/reset}">
+                                <i class="fa fa-lock"></i> 修改密码
+                            </a>
+                            <a class="pull-right" href="/user/logout" th:href="@{seller/user/logout}">
+                                <i class="fa fa-sign-out"></i> 退出
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+</html>

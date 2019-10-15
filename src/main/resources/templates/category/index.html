@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>管理后台</title>
+    <link href="/bootstrap/bootstrap.min.css" th:href="@{/bootstrap/bootstrap.min.css}" rel="stylesheet">
+    <link href="/font-awesome/css/font-awesome.min.css" th:href="@{/font-awesome/css/font-awesome.min.css}"
+          rel="stylesheet">
+    <link href="/css/style.css" th:href="@{/css/global_style.css}" rel="stylesheet">
+</head>
+
+
+<body>
+
+<div id="wrapper">
+
+    <!-- 左边 nav -->
+    <!-- 通用部分 -->
+    <div th:replace="module/nav_left::html"></div>
+
+
+    <!-- 右边内容 -->
+    <div id="page-wrapper" class="gray-bg" style="background-color: #ffffff;">
+        <!-- 第一块 上面的顶栏 -->
+        <!-- 通用部分 -->
+        <div th:replace="module/nav_top::html"></div>
+
+        <!-- ------------------  -->
+
+        <!-- 第二块 tab栏 -->
+        <div class="row  border-bottom">
+            <div class="col-lg-12">
+                <div class="tab_title">
+                    <ul class="nav nav-pills">
+                        <li>
+                            <a href="" th:href="@{/seller/product/index}">美食列表</a>
+                        </li>
+                        <li class="current">
+                            <a href="" th:href="@{/seller/category/index}">分类列表</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!--  -------------------------  -->
+        <div class="row">
+            <div class="col-lg-12">
+                <form class="form-inline wrap_search">
+                    <div class="row  m-t p-w-m">
+                        <div class="form-group">
+                            <select name="hasDelete" class="form-control inline">
+                                <option value="-1">请选择状态</option>
+                                <option th:each="status : ${DeleteStatusEnumList}"
+                                        th:selected="${status.code == hasDelete}"
+                                        th:value="${status.getCode()}"
+                                        th:text="${status.getMessage()}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <a class="btn btn-w-m btn-outline btn-primary pull-right"
+                               href="" th:href="@{/seller/category/add}">
+                                <i class="fa fa-plus"></i>分类
+                            </a>
+                        </div>
+                    </div>
+
+                </form>
+                <table class="table table-bordered m-t">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>类目编号</th>
+                        <th>类目名称</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="category : ${categoryList}">
+                        <td th:text="${category.categoryId}"></td>
+                        <td th:text="${category.categoryType}"></td>
+                        <td th:text="${category.categoryName}"></td>
+                        <td th:text="${category.deleteStatusEnum.message}"></td>
+                        <td>
+                            <a class="m-l" href="" th:href="@{'/seller/category/set/' + ${category.categoryId}}">
+                                <i class="fa fa-edit fa-lg"></i>
+                            </a>
+
+                            <a class="m-l remove" href="javascript:void(0);" data="0" th:data="${category.categoryId}"
+                               th:if="${category.deleteStatusEnum.code} eq 0">
+                                <i class="fa fa-trash fa-lg"></i>
+                            </a>
+
+                            <a class="m-l recover" href="javascript:void(0);" data="0" th:data="${category.categoryId}"
+                               th:if="${category.deleteStatusEnum.code} eq 1">
+                                <i class="fa fa-rotate-left fa-lg"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--  --------------------------------------  -->
+
+    </div>
+</div>
+<!-- 通用 html 部分 -->
+<script src="/plugins/jquery-2.1.1.js" th:src="@{/plugins/jquery-2.1.1.js}"></script>
+<script src="/bootstrap/bootstrap.min.js" th:src="@{/bootstrap/bootstrap.min.js}"></script>
+<script src="/plugins/layer/layer.js" th:src="@{/plugins/layer/layer.js}"></script>
+<script src="/js/common.js" th:src="@{/js/common.js}"></script>
+
+
+<script src="" th:src="@{/js/category/index.js}"></script>
+
+</body>
+</html>

@@ -17,4 +17,8 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
      */
     List<ProductCategory> findByCategoryTypeIn(List<Integer> categoryTypeList);
 
+    List<ProductCategory> findByHasDelete(Integer hasDelete);
+
+    ProductCategory findByCategoryType(Integer categoryType);
+
 }
